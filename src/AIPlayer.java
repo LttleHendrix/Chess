@@ -163,6 +163,7 @@ public class AIPlayer {
     }
 
     public ArrayList<Move> getPossibleMoves(Board board) {
+        System.out.println("Finding all possible moves for "+color);
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
 
         if(board.getKing(color) != null && board.getKing(color).canCastleKingside(board)) {
@@ -183,6 +184,7 @@ public class AIPlayer {
                 }
             }
         }
+        System.out.println("All moves found for "+color );
         return possibleMoves;
     }
 

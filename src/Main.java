@@ -115,7 +115,6 @@ public class Main {
                 turn = turn + 1;
             }
             board.printBoard();
-            robot.delay(70);
         }
 
 
