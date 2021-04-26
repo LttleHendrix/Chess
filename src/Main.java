@@ -79,17 +79,17 @@ public class Main {
                     if (board.squareContains(oldRow, oldCol).isLegalMove(board, newRow, newCol)) {
                         if (board.getKing("white").canCastleKingside(board) && oldRow == 7 && oldCol == 4 && newRow == 7 && newCol == 6) {
                             nextMove = new KingCastleMove(board.getKing("white"));
-                            nextMove.doMove(board);
+                            nextMove.doMove();
                             completedMoves.add(nextMove);
                             turn = turn + 1;
                         } else if (board.getKing("white").canCastleQueenside(board) && oldRow == 7 && oldCol == 4 && newRow == 7 && newCol == 2) {
                             nextMove = new QueenCastleMove(board.getKing("white"));
-                            nextMove.doMove(board);
+                            nextMove.doMove();
                             completedMoves.add(nextMove);
                             turn = turn + 1;
                         } else {
-                            nextMove = new Move(board.squareContains(oldRow, oldCol), newRow, newCol);
-                            nextMove.doMove(board);
+                            nextMove = new Move(board.squareContains(oldRow, oldCol), newRow, newCol, board);
+                            nextMove.doMove();
                             completedMoves.add(nextMove);
                             turn = turn + 1;
                         }
@@ -107,8 +107,9 @@ public class Main {
                     turn = turn + 1;
                 } **/
                 //nextMove = ai.randomMove(board);
-                nextMove = ai.getBestMove(0, 2, board, new AIPlayer(board, "white"), new Move());
-                nextMove.doMove(board);
+                //nextMove = ai.getBestMove(0, 2, board, new AIPlayer(board, "white"), new Move());
+                nextMove = ai.getMove(new AIPlayer(board, "white"));
+                nextMove.doMove();
                 completedMoves.add(nextMove);
 
                 turn = turn + 1;

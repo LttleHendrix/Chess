@@ -70,10 +70,10 @@ public class Piece {
     }
 
     public boolean badCheckMove(Board board, int row, int col) {
-        Move move = new Move(this, row, col);
-        move.doMove(board);
+        Move move = new Move(this, row, col, board);
+        move.doMove();
         boolean check = board.isInCheck(this.color);
-        move.undoMove(board);
+        move.undoMove();
         return check;
     }
 
