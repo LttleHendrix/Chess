@@ -59,7 +59,7 @@ public class AIPlayer {
         findMaxMove(0, nextMove, other);
         //restoreState();
         //incrementNumActionsExecuted();
-
+        nextMove.board = board;
         return nextMove;
 
     }
@@ -82,7 +82,7 @@ public class AIPlayer {
             }
             passUpMaxMinimaxValue(incomingMove, possibleMoves);
         }
-        if(possibleMoves.size() > 0) {
+        if(currentDepth == 0) {
             Move best = possibleMoves.get(0);
             for(int i=0; i<possibleMoves.size(); i++) {
                 if(possibleMoves.get(i).minimaxValue > best.minimaxValue) {
