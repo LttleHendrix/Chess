@@ -65,6 +65,7 @@ public class AIPlayer {
     }
 
     protected void findMaxMove(int currentDepth, Move incomingMove, AIPlayer other) {
+        System.out.println("Finding max and Depth is "+currentDepth);
         ArrayList<Move> possibleMoves = getPossibleMoves(board);
         if(currentDepth >= depthLimit) {
             System.out.println("Heuristic score of this next board is: "+heuristicScore(board));
@@ -75,6 +76,7 @@ public class AIPlayer {
                 Move temp = possibleMoves.get(i);
                 if(temp.doMove()) {
                     findMinMove(currentDepth, possibleMoves.get(i), other);
+                    System.out.println("Trying to undo "+temp);
                     temp.undoMove();
                 }
             }
@@ -92,6 +94,7 @@ public class AIPlayer {
     }
 
     protected void findMinMove(int currentDepth, Move incomingMove, AIPlayer other) {
+        System.out.println("Finding min and Depth is "+currentDepth);
         ArrayList<Move> possibleMoves = other.getPossibleMoves(board);
         Move move;
         for(Move possibleMove : possibleMoves) {
@@ -107,20 +110,24 @@ public class AIPlayer {
 
 
     protected void passUpMaxMinimaxValue(Move incomingMove, ArrayList<Move> possibleMoves) {
+        System.out.println("Trying to pass up maxminimax value");
         if(possibleMoves == null || possibleMoves.isEmpty()) {
             incomingMove.setMinimaxValue(Integer.MIN_VALUE);
         } else {
             Move bestMove = possibleMoves.get(0);
             for(int i=1; i<possibleMoves.size(); i++) {
+                System.out.println("Possible minimaxValue " + possibleMoves.get(i).minimaxValue);
                 if(possibleMoves.get(i).minimaxValue > bestMove.minimaxValue) {
                     bestMove = possibleMoves.get(i);
                 }
             }
+            System.out.println("Max minimaxvalue "+bestMove.minimaxValue);
             incomingMove.setMinimaxValue(bestMove.minimaxValue);
         }
     }
 
     private void passUpMinMinimaxValue(Move incomingMove, ArrayList<Move> possibleMoves) {
+        System.out.println("Trying to pass up minminimax value");
         if(possibleMoves == null || possibleMoves.isEmpty()) {
             incomingMove.setMinimaxValue(Integer.MAX_VALUE);
         } else {
@@ -130,6 +137,7 @@ public class AIPlayer {
                     bestMove = possibleMoves.get(i);
                 }
             }
+            System.out.println("Min minimaxvalue "+bestMove.minimaxValue);
             incomingMove.setMinimaxValue(bestMove.minimaxValue);
         }
     }

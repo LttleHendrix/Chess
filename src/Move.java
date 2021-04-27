@@ -62,6 +62,8 @@ public class Move {
         printMove();
         if(board.squareContains(newRow, newCol) == null) {
             System.out.println("No piece to be moved back");
+            board.printPieces();
+            board.printBoard();
             return false;
         }
         if(board.squareContains(oldRow, oldCol) != null) {
