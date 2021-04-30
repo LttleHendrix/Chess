@@ -9,6 +9,7 @@ public class Main {
 
         Board board = new Board();
         AIPlayer ai = new AIPlayer(board, "black");
+        AIwithAlphaBetaPruning prune = new AIwithAlphaBetaPruning(board, "black");
         Scanner scanner = new Scanner(System.in);
         Robot robot = new Robot();
         ArrayList<Move> completedMoves = new ArrayList<Move>();
@@ -108,7 +109,8 @@ public class Main {
                 } **/
                 //nextMove = ai.randomMove(board);
                 //nextMove = ai.getBestMove(0, 2, board, new AIPlayer(board, "white"), new Move());
-                nextMove = ai.getMove(new AIPlayer(board, "white"));
+                nextMove = prune.getMove(new AIwithAlphaBetaPruning(board, "white"));
+                //nextMove = ai.getMove(new AIPlayer(board, "white"));
                 nextMove.doMove();
                 completedMoves.add(nextMove);
 

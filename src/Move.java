@@ -37,8 +37,7 @@ public class Move {
     }
 
     public boolean doMove() {
-        System.out.println("Doing move");
-        printMove();
+        //System.out.println("Doing move");
         if(board.squareContains(oldRow, oldCol) == null) {
             System.out.println("Could not do move");
             return false;
@@ -58,8 +57,7 @@ public class Move {
     }
 
     public boolean undoMove() {
-        System.out.println("Undoing move");
-        printMove();
+        //System.out.println("Undoing move");
         if(board.squareContains(newRow, newCol) == null) {
             System.out.println("No piece to be moved back");
             board.printPieces();

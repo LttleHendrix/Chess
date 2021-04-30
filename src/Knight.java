@@ -74,4 +74,8 @@ public class Knight extends Piece {
         return false;
     }
 
+    public String getType() {
+        return "Knight";
+    }
+
 }

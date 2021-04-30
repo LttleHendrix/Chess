@@ -23,13 +23,25 @@ public class King extends Piece {
                         if(board.squareContains(7, 7).timesMoved == 0) {
                             if(board.squareContains(7, 5) == null) {
                                 if(board.squareContains(7, 6) == null) {
-                                    return true;
+                                    return true; }}}}}}
+                               /** } else {
+                                    System.out.println("7 6 is occupied");
                                 }
+                            } else {
+                                System.out.println("7 5 is occupied");
                             }
+                        } else {
+                            System.out.println("Rook has moved ");
                         }
+                    } else {
+                        System.out.println("Rook square is empty");
                     }
+                } else {
+                    System.out.println("King has moved "+this.timesMoved+" times");
                 }
-            }
+            } else {
+                System.out.println("King's square is empty");
+            } **/
         } else if(color == "black") {
             if(board.squareContains(0, 4) != null) {
                 if (board.squareContains(0, 4).timesMoved == 0) {

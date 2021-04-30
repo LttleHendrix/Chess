@@ -1,62 +1,24 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AIPlayer {
+public class AIwithAlphaBetaPruning {
 
     Board board;
     String color;
     Random random = new Random();
     private int depthLimit;
 
-
-    public AIPlayer(Board board, String color) {
+    public AIwithAlphaBetaPruning(Board board, String color) {
         this.board = board;
         this.color = color;
-        depthLimit = 2;
+        depthLimit = 3;
     }
 
-    public Move getBestMove(int depth, int depthLimit, Board board, AIPlayer other, Move move) {
-        ArrayList<Move> possibleMoves = getPossibleMoves(board);
-        Move bestCheckedMove;
-
-        if(depth >= depthLimit) {
-            move.setMinimaxValue(heuristicScore(board));
-        } else {
-            for (int i = 0; i < possibleMoves.size(); i++) {
-                Move temp = possibleMoves.get(i);
-                temp.doMove();
-                other.getBestMove(depth + 1, depth, board, this, temp);
-                temp.undoMove();
-            }
-            if(possibleMoves == null || possibleMoves.isEmpty()) {
-                move.setMinimaxValue(Integer.MIN_VALUE);
-            } else {
-                bestCheckedMove = possibleMoves.get(0);
-                for(int i=0; i<possibleMoves.size(); i++) {
-                    if(possibleMoves.get(i).minimaxValue > bestCheckedMove.minimaxValue) {
-                        bestCheckedMove = possibleMoves.get(i);
-                    }
-                }
-                move.setMinimaxValue(bestCheckedMove.minimaxValue);
-            }
-        }
-        if(depth == 0) {
-            Move best = possibleMoves.get(0);
-            for(Move possibleMove : possibleMoves) {
-                if(possibleMove.minimaxValue >= best.minimaxValue) {
-                    best = possibleMove;
-                }
-            }
-            move.setMove(best);
-        }
-        return move;
-    }
-
-    public Move getMove(AIPlayer other) {
+    public Move getMove(AIwithAlphaBetaPruning other) {
         Move nextMove = new Move();
 
         //saveState();
-        findMaxMove(0, nextMove, other);
+        findMaxMove(0, nextMove, other, Integer.MIN_VALUE);
         //restoreState();
         //incrementNumActionsExecuted();
         nextMove.board = board;
@@ -64,7 +26,7 @@ public class AIPlayer {
 
     }
 
-    protected void findMaxMove(int currentDepth, Move incomingMove, AIPlayer other) {
+    protected void findMaxMove(int currentDepth, Move incomingMove, AIwithAlphaBetaPruning other, int highestAchievableMinimaxValue) {
         ArrayList<Move> possibleMoves = getPossibleMoves(board);
         if(currentDepth >= depthLimit) {
             incomingMove.setMinimaxValue(heuristicScore(board));
@@ -72,10 +34,17 @@ public class AIPlayer {
             for(int i=0; i<possibleMoves.size(); i++) {
                 if(currentDepth == 0) {
                     System.out.println("Solving move "+i+" out of "+possibleMoves.size());
-                }
+                }// else if(currentDepth == 1) {
+               //     System.out.println("One layer deep solving "+i+" out of "+possibleMoves.size());
+              //  } else if(currentDepth == 2) {
+             //       System.out.println("Two layers deep solving "+i+" out of "+possibleMoves.size());
+              //  }
                 Move temp = possibleMoves.get(i);
                 if(temp.doMove()) {
-                    findMinMove(currentDepth, possibleMoves.get(i), other);
+                    findMinMove(currentDepth, possibleMoves.get(i), other, highestAchievableMinimaxValue);
+                    if(highestAchievableMinimaxValue < possibleMoves.get(i).minimaxValue) {
+                        highestAchievableMinimaxValue = possibleMoves.get(i).minimaxValue;
+                    }
                     temp.undoMove();
                 }
             }
@@ -92,14 +61,18 @@ public class AIPlayer {
         }
     }
 
-    protected void findMinMove(int currentDepth, Move incomingMove, AIPlayer other) {
+    protected void findMinMove(int currentDepth, Move incomingMove, AIwithAlphaBetaPruning other, int highestAchievableMinimaxValue) {
         ArrayList<Move> possibleMoves = other.getPossibleMoves(board);
         Move move;
         for(Move possibleMove : possibleMoves) {
             move = possibleMove;
             if(move.doMove()) {
-                findMaxMove(currentDepth + 1, possibleMove, other);
+                findMaxMove(currentDepth + 1, possibleMove, other, highestAchievableMinimaxValue);
                 move.undoMove();
+                if(highestAchievableMinimaxValue > possibleMove.minimaxValue) {
+                    passUpMinMinimaxValue(incomingMove, possibleMoves);
+                    return;
+                }
             }
         }
         passUpMinMinimaxValue(incomingMove, possibleMoves);
@@ -139,6 +112,7 @@ public class AIPlayer {
     public int heuristicScore(Board board) {
         int heuristic = 0;
 
+        // For value of pieces
         for(int i=0; i<board.boardPieces.size(); i++) {
             if(board.boardPieces.get(i).getColor().equals(color)) {
                 heuristic = heuristic + board.boardPieces.get(i).pieceValue;
@@ -146,6 +120,22 @@ public class AIPlayer {
                 heuristic = heuristic - board.boardPieces.get(i).pieceValue;
             }
         }
+
+        // two point boost/subtract if knight is in center
+        for(int i=2; i<=5; i++) {
+            for(int j=2; j<=5; j++) {
+                Piece piece = board.squareContains(i, j);
+                if(piece != null && piece.getType().equals("Knight")) {
+                    if(piece.getColor().equals(color)) {
+                        heuristic = heuristic + 2;
+                    } else {
+                        heuristic = heuristic - 2;
+                    }
+                }
+            }
+        }
+
+
         return heuristic;
     }
 
@@ -191,10 +181,4 @@ public class AIPlayer {
 
 
 
-
-
-
-
 }
-
-
