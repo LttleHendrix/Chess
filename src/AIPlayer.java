@@ -24,9 +24,9 @@ public class AIPlayer {
         } else {
             for (int i = 0; i < possibleMoves.size(); i++) {
                 Move temp = possibleMoves.get(i);
-                temp.doMove();
+                temp.doMove(board);
                 other.getBestMove(depth + 1, depth, board, this, temp);
-                temp.undoMove();
+                temp.undoMove(board);
             }
             if(possibleMoves == null || possibleMoves.isEmpty()) {
                 move.setMinimaxValue(Integer.MIN_VALUE);
@@ -74,9 +74,9 @@ public class AIPlayer {
                     System.out.println("Solving move "+i+" out of "+possibleMoves.size());
                 }
                 Move temp = possibleMoves.get(i);
-                if(temp.doMove()) {
+                if(temp.doMove(board)) {
                     findMinMove(currentDepth, possibleMoves.get(i), other);
-                    temp.undoMove();
+                    temp.undoMove(board);
                 }
             }
             passUpMaxMinimaxValue(incomingMove, possibleMoves);
@@ -97,9 +97,9 @@ public class AIPlayer {
         Move move;
         for(Move possibleMove : possibleMoves) {
             move = possibleMove;
-            if(move.doMove()) {
+            if(move.doMove(board)) {
                 findMaxMove(currentDepth + 1, possibleMove, other);
-                move.undoMove();
+                move.undoMove(board);
             }
         }
         passUpMinMinimaxValue(incomingMove, possibleMoves);
@@ -167,10 +167,10 @@ public class AIPlayer {
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
 
         if(board.getKing(color) != null && board.getKing(color).canCastleKingside(board)) {
-            possibleMoves.add(new KingCastleMove(board.getKing(color)));
+            possibleMoves.add(new KingCastleMove(board.getKing(color), board));
         }
         if(board.getKing(color) != null && board.getKing(color).canCastleQueenside(board)) {
-            possibleMoves.add(new QueenCastleMove(board.getKing(color)));
+            possibleMoves.add(new QueenCastleMove(board.getKing(color), board));
         }
 
         for(int a=0; a<board.boardPieces.size(); a++) {

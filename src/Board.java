@@ -85,6 +85,7 @@ public class Board {
         return false;
     }
 
+
     public void clearSquare(int row, int col) {
         if(squareContains(row, col) != null) {
             removedPieces.add(squareContains(row, col));
@@ -123,13 +124,25 @@ public class Board {
         return null;
     }
 
+    public King getOtherKing(String color) {
+        for(int i=0; i<boardPieces.size(); i++) {
+            if(boardPieces.get(i).getType().equals("King")) {
+                if(!boardPieces.get(i).getColor().equals(color)) {
+                    return (King) boardPieces.get(i);
+                }
+            }
+        }
+        return null;
+    }
+
 
     public boolean gameIsOver() {
         return false;
     }
 
-    public Board clone() {
-        return new Board(boardPieces, removedPieces);
+    public Board clone() throws CloneNotSupportedException{
+        Board clone = (Board) super.clone();
+        return clone;
     }
 
 

@@ -36,18 +36,23 @@ public class Move {
         return ("Row:"+oldRow+" Col:"+oldCol+" to Row:"+newRow+" Col:"+newCol);
     }
 
-    public boolean doMove() {
+    public boolean doMove(Board board) {
+        if(thisPiece == null) {
+            System.out.println("Piece is null trying to do "+toString());
+            return false;
+        }
+        thisPiece.addTimeMoved();
         //System.out.println("Doing move");
         if(board.squareContains(oldRow, oldCol) == null) {
-            System.out.println("Could not do move");
+            System.out.println("Could not do move "+toString()+" because old squares is null"   );
             return false;
         }
         if(board.squareContains(newRow, newCol) != null) {
             if(board.squareContains(oldRow, oldCol).getColor().equals(board.squareContains(newRow, newCol).getColor())) {
-                System.out.println("Could not do move");
+                System.out.println("Could not do move "+toString()+" because new square is occupied by friendly"    );
+                System.out.println("New square is square "+newRow+" "+newCol);
                 return false;
             }
-            board.squareContains(oldRow, oldCol).addTimeMoved();
             takenPiece = board.squareContains(newRow, newCol);
             board.clearSquare(newRow, newCol);
         }
@@ -56,7 +61,8 @@ public class Move {
         return true;
     }
 
-    public boolean undoMove() {
+    public boolean undoMove(Board board) {
+        thisPiece.subTimeMoved();
         //System.out.println("Undoing move");
         if(board.squareContains(newRow, newCol) == null) {
             System.out.println("No piece to be moved back");
@@ -69,7 +75,6 @@ public class Move {
             return false;
         }
         thisPiece.movePiece(oldRow, oldCol);
-        board.squareContains(oldRow, oldCol).subTimeMoved();
         if(takenPiece != null) {
             board.addPiece(takenPiece);
         }
@@ -94,9 +99,9 @@ public class Move {
 
     public boolean badCheckMove() {
         System.out.println("Checking for check");
-        this.doMove();
+        this.doMove(board);
         boolean check = board.isInCheck(thisPiece.color);
-        this.undoMove();
+        this.undoMove(board);
         System.out.println("badCheckMove complete");
         System.out.println(""+check);
         return check;

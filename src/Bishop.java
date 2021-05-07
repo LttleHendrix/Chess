@@ -7,6 +7,10 @@ public class Bishop extends Piece {
         pieceValue = 32;
     }
 
+    public int getPieceValue() {
+        return 32;
+    }
+
     public String toString() {
         if(color.equals("white")) {
             return "  Bishop |";
@@ -125,6 +129,10 @@ public class Bishop extends Piece {
 
         return true;
 
+    }
+
+    public String getType() {
+        return "Bishop";
     }
 
 }

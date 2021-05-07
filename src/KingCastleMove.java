@@ -1,8 +1,8 @@
 public class KingCastleMove extends Move {
 
-    Piece king;
+    King king;
 
-    public KingCastleMove(Piece king) {
+    public KingCastleMove(King king, Board board) {
         super();
         this.king = king;
     }
@@ -13,6 +13,7 @@ public class KingCastleMove extends Move {
 
     public boolean doMove(Board board) {
         king.addTimeMoved();
+        king.setHasCastled(true);
         board.squareContains(king.getRow(), 7).addTimeMoved();
         king.movePiece(king.getRow(), 6);
         board.squareContains(king.getRow(), 7).movePiece(king.getRow(), 5);
@@ -21,6 +22,7 @@ public class KingCastleMove extends Move {
 
     public boolean undoMove(Board board) {
         king.subTimeMoved();
+        king.setHasCastled(false);
         king.movePiece(king.getRow(), 4);
         board.squareContains(king.getRow(), 5).subTimeMoved();
         board.squareContains(king.getRow(), 5).movePiece(king.getRow(), 7);

@@ -69,11 +69,15 @@ public class Piece {
         timesMoved = timesMoved - 1;
     }
 
+    public int getPieceValue() {
+        return 0;
+    }
+
     public boolean badCheckMove(Board board, int row, int col) {
         Move move = new Move(this, row, col, board);
-        move.doMove();
+        move.doMove(board);
         boolean check = board.isInCheck(this.color);
-        move.undoMove();
+        move.undoMove(board);
         return check;
     }
 

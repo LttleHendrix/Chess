@@ -12,14 +12,14 @@ public class Todo {
      *
      * Things to fix/figure out
      * Kings sometimes cannot capture properly
-     * Castling sometimes is not valid when it should be
+     * Make it so that you cannot castle when certain squares are attacked
      *
      *
      *
      *What to care about for bot
      * - Piece values ---------------------------------------------------
      * - position for most squares it can attack
-     * - lightly prioritize putting them in check
+     *
      *
      *
      *

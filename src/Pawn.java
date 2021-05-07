@@ -6,6 +6,26 @@ public class Pawn extends Piece {
         pieceValue = 10;
     }
 
+    public int getPieceValue() {
+
+        // makes pawns more valuable the further up you move them
+        int forwardsBonus = 0;
+        if(color.equals("white")) {
+            forwardsBonus = 6-row;
+        } else if(color.equals("black")) {
+            forwardsBonus = row - 1;
+        }
+
+
+
+
+
+
+
+
+        return pieceValue + forwardsBonus;
+    }
+
     public String toString() {
         if(color.equals("white")) {
             return "   pawn  |";
@@ -97,6 +117,9 @@ public class Pawn extends Piece {
         return false;
     }
 
+    public String getType() {
+        return "Pawn";
+    }
 
     public boolean legalIgnoreCheck(Board board, int row, int col) {
 

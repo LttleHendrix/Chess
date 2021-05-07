@@ -5,6 +5,10 @@ public class Knight extends Piece {
         pieceValue = 30;
     }
 
+    public int getPieceValue() {
+        return 30;
+    }
+
     public String toString() {
         if(color.equals("white")) {
             return "  Knight |";

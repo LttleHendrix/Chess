@@ -8,6 +8,10 @@ public class Rook extends Piece {
         hasMoved = false;
     }
 
+    public int getPieceValue() {
+        return 50;
+    }
+
     public String toString() {
         if(color.equals("white")) {
             return "   Rook  |";

@@ -5,6 +5,10 @@ public class Queen extends Piece{
         pieceValue = 90;
     }
 
+    public int getPieceValue() {
+        return 90;
+    }
+
 
     public String toString() {
         if(color.equals("white")) {
