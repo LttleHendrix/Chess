@@ -7,15 +7,35 @@ public class Main {
 
     public static void main(String[] args) throws AWTException {
 
-
-        Board board = new Board();
-        HumanPlayer player = new HumanPlayer("white");
-        AIPlayer ai = new AIPlayer(board, "black");
-        AIwithAlphaBetaPruning prune = new AIwithAlphaBetaPruning(board, "black");
         Scanner scanner = new Scanner(System.in);
+        Player whitePlayer;
+        Player blackPlayer;
+        AIwithAlphaBetaPruning otherComp;
+        Board board = new Board();
         Robot robot = new Robot();
+        String color = "lol";
         ArrayList<Move> completedMoves = new ArrayList<Move>();
         Move nextMove;
+
+
+        while(!color.equals("white") && !color.equals("black")) {
+            System.out.println("Is the computer going to be white or black");
+            color = scanner.nextLine();
+        }
+
+        if(color.equals("white")) {
+            blackPlayer = new HumanPlayer("black");
+            whitePlayer = new AIwithAlphaBetaPruning(board, "white");
+            otherComp = new AIwithAlphaBetaPruning(board, "black");
+        } else if(color.equals("black")) {
+            whitePlayer = new HumanPlayer("white");
+            blackPlayer = new AIwithAlphaBetaPruning(board, "black");
+            otherComp = new AIwithAlphaBetaPruning(board, "white");
+        } else {
+            System.out.println("Big bad problem");
+            return;
+        }
+
 
         System.out.println(new King(0, 0, "white").getClass());
         board.addPiece(new Pawn(1, 0, "black"));
@@ -63,13 +83,12 @@ public class Main {
                 System.out.println("White's turn ");
             } else {
                   System.out.println("Black's Turn----");
-                  robot.delay(25);
             }
 
             if(turn % 2 == 0) {
-                nextMove = player.getMove(board);
+                nextMove = whitePlayer.getMove(board, otherComp);
             } else {
-                nextMove = prune.getMove(new AIwithAlphaBetaPruning(board, "white"));
+                nextMove = blackPlayer.getMove(board, otherComp);
             }
             nextMove.doMove(board);
             turn = turn + 1;

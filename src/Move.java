@@ -19,9 +19,9 @@ public class Move {
         this.board = board;
     }
 
-    public Move() {
-
-    }
+    //public Move() {
+//
+    //}
 
     public void setMove(Move move) {
         this.thisPiece = move.thisPiece;
@@ -39,12 +39,12 @@ public class Move {
     public boolean doMove(Board board) {
         if(thisPiece == null) {
             System.out.println("Piece is null trying to do "+toString());
-            return false;
+            throw new NullPointerException();
         }
         thisPiece.addTimeMoved();
         //System.out.println("Doing move");
         if(board.squareContains(oldRow, oldCol) == null) {
-            System.out.println("Could not do move "+toString()+" because old squares is null"   );
+            System.out.println("Could not do move "+toString()+" because old square is null"   );
             return false;
         }
         if(board.squareContains(newRow, newCol) != null) {
@@ -106,10 +106,6 @@ public class Move {
         System.out.println(""+check);
         return check;
     }
-
-
-
-
 
 
 }

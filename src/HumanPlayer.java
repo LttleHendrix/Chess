@@ -1,15 +1,16 @@
 import java.util.Scanner;
 
-public class HumanPlayer {
+public class HumanPlayer extends Player{
 
     Scanner scanner = new Scanner(System.in);
     String color;
+    Board board;
 
     public HumanPlayer(String color) {
         this.color = color;
     }
 
-    public Move getMove(Board board) {
+    public Move getMove(Board board, AIwithAlphaBetaPruning other) {
 
         while(true) {
             System.out.println("Piece to move's Row:");

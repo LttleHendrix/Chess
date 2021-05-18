@@ -47,6 +47,10 @@ public class Pawn extends Piece {
             return false;
         }
 
+        if(row == this.row && col == this.col) {
+            return false;
+        }
+
         // Checks for black pieces, returning false if you are in check after the move
         if(color.equals("black")) {
             // if in same column moving one square towards an empty space return true

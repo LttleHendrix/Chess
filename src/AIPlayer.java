@@ -52,7 +52,7 @@ public class AIPlayer {
         return move;
     }
 
-    public Move getMove(AIPlayer other) {
+    /**public Move getMove(AIPlayer other) {
         Move nextMove = new Move();
 
         //saveState();
@@ -62,7 +62,7 @@ public class AIPlayer {
         nextMove.board = board;
         return nextMove;
 
-    }
+    } **/
 
     protected void findMaxMove(int currentDepth, Move incomingMove, AIPlayer other) {
         ArrayList<Move> possibleMoves = getPossibleMoves(board);

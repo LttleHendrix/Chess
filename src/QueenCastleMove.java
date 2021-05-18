@@ -2,7 +2,7 @@ public class QueenCastleMove extends Move{
     King king;
 
     public QueenCastleMove(King king, Board board) {
-        super();
+        super(king, -1, -1, board);
         this.king = king;
     }
 

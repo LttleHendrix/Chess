@@ -5,6 +5,7 @@ public class PawnPromotionMove extends Move {
     String newPieceType;
 
     public PawnPromotionMove(Pawn pawn, int newRow, int newCol, Board board, String newPieceType) {
+        super(pawn, -3, -3, board);
         this.pawn = pawn;
         takenPiece = board.squareContains(newRow, newCol);
         oldRow = pawn.getRow();
