@@ -19,7 +19,7 @@ public class AIwithAlphaBetaPruning extends Player{
     public Move getMove(Board board, AIwithAlphaBetaPruning other) {
         Move nextMove = getPossibleMoves(board).get(0);
 
-        calculateDepthLimit(board);
+        //calculateDepthLimit(board);
 
         //saveState();
         findMaxMove(0, nextMove, other, Integer.MIN_VALUE);
