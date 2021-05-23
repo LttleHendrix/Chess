@@ -1,3 +1,5 @@
+package Pieces;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,7 +19,12 @@ public class AIwithAlphaBetaPruning extends Player{
     }
 
     public Move getMove(Board board, AIwithAlphaBetaPruning other) {
+        long startTime = System.currentTimeMillis();
+        long totalTime;
+
         Move nextMove = getPossibleMoves(board).get(0);
+
+        //if()
 
         //calculateDepthLimit(board);
 
@@ -26,6 +33,9 @@ public class AIwithAlphaBetaPruning extends Player{
         //restoreState();
         //incrementNumActionsExecuted();
         nextMove.board = board;
+
+        totalTime = (System.currentTimeMillis() - startTime)/1000;
+        System.out.println("Move found in "+totalTime+" seconds");
         return nextMove;
 
     }
@@ -44,13 +54,26 @@ public class AIwithAlphaBetaPruning extends Player{
         }
     }
 
-    protected void findMaxMove(int currentDepth, Move incomingMove, AIwithAlphaBetaPruning other, int highestAchievableMinimaxValue) {
+
+
+    protected void findMaxMove(int currentDepth, Move incomingMove, AIwithAlphaBetaPruning other, double highestAchievableMinimaxValue) {
 
         // Without sorting moves
-        //ArrayList<Move> possibleMoves = getPossibleMoves(board);
+        //ArrayList<Pieces.Move> possibleMoves = getPossibleMoves(board);
 
         // With sorting moves
         ArrayList<Move> possibleMoves = getSortedPossibleMoves(board);
+
+        // Start experimental move halfing
+/**
+        if(currentDepth != 0) {
+            int newSize = (int) Math.ceil(((double) (possibleMoves.size())) / 2.0);
+            while (possibleMoves.size() > newSize) {
+                possibleMoves.remove(possibleMoves.get(possibleMoves.size() - 1));
+            }
+        }
+**/
+        // End experimental move halfing
 
         if(currentDepth >= depthLimit) {
             incomingMove.setMinimaxValue(heuristicScore(board));
@@ -88,13 +111,26 @@ public class AIwithAlphaBetaPruning extends Player{
         }
     }
 
-    protected void findMinMove(int currentDepth, Move incomingMove, AIwithAlphaBetaPruning other, int highestAchievableMinimaxValue) {
+    protected void findMinMove(int currentDepth, Move incomingMove, AIwithAlphaBetaPruning other, double highestAchievableMinimaxValue) {
 
         // Without sorting moves
-        //ArrayList<Move> possibleMoves = other.getPossibleMoves(board);
+        //ArrayList<Pieces.Move> possibleMoves = other.getPossibleMoves(board);
 
         // With sorting moves
         ArrayList<Move> possibleMoves = other.getSortedPossibleMoves(board);
+
+        // Start experimental move halfing
+
+        /**int newSize = (int) Math.ceil(((double)(possibleMoves.size()))/2.0);
+        if(currentDepth != 0) {
+            while (possibleMoves.size() > newSize) {
+                possibleMoves.remove(possibleMoves.get(possibleMoves.size() - 1));
+            }
+        } **/
+
+        // End experimental move halfing
+
+
 
         Move move;
         for(Move possibleMove : possibleMoves) {
@@ -148,8 +184,8 @@ public class AIwithAlphaBetaPruning extends Player{
     }
 
 
-    private int heuristicScore(Board board) {
-        int heuristic = 0;
+    private double heuristicScore(Board board) {
+        double heuristic = 0;
 
         // For value of pieces 10 pawn 30 knight 32 bishop 50 rook 90 queen
         for(int i=0; i<board.boardPieces.size(); i++) {
@@ -164,7 +200,7 @@ public class AIwithAlphaBetaPruning extends Player{
         for(int i=2; i<=5; i++) {
             for(int j=2; j<=5; j++) {
                 Piece piece = board.squareContains(i, j);
-                if(piece != null && piece.getType().equals("Knight")) {
+                if(piece != null && piece.getType().equals("Pieces.Knight")) {
                     if(piece.getColor().equals(color)) {
                         heuristic = heuristic + 2;
                     } else {
@@ -176,7 +212,7 @@ public class AIwithAlphaBetaPruning extends Player{
 
         King king = board.getKing(color);
         if(king == null) {
-            System.out.println("King is somehow null on this board ");
+            System.out.println("Pieces.King is somehow null on this board ");
             board.printBoard();
         }
         if(king.hasCastled()) {
@@ -191,8 +227,8 @@ public class AIwithAlphaBetaPruning extends Player{
         if(color.equals("white")) {
             for(int i=0; i<=5; i++) {
                 for(int j=0; j<=7; j++) {
-                    Piece piece = board.squareContains(i, j);
-                    if(piece != null && piece.getType().equals("Bishop")) {
+                    Pieces.Piece piece = board.squareContains(i, j);
+                    if(piece != null && piece.getType().equals("Pieces.Bishop")) {
                         if(piece.getColor().equals(color)) {
                             heuristic = heuristic + 2;
                         } else {
@@ -204,8 +240,8 @@ public class AIwithAlphaBetaPruning extends Player{
         } else if(color.equals("black")) {
             for(int i=2; i<=7; i++) {
                 for(int j=0; j<=7; j++) {
-                    Piece piece = board.squareContains(i, j);
-                    if(piece != null && piece.getType().equals("Bishop")) {
+                    Pieces.Piece piece = board.squareContains(i, j);
+                    if(piece != null && piece.getType().equals("Pieces.Bishop")) {
                         if(piece.getColor().equals(color)) {
                             heuristic = heuristic + 2;
                         } else {
@@ -251,14 +287,14 @@ public class AIwithAlphaBetaPruning extends Player{
         return possibleMoves;
     }
 
-    //public ArrayList<Move> getOpeningMoves(Board board) {
-    //    ArrayList<Move> possibleMoves = getPossibleMoves(board);
+    //public ArrayList<Pieces.Move> getOpeningMoves(Pieces.Board board) {
+    //    ArrayList<Pieces.Move> possibleMoves = getPossibleMoves(board);
     //}
 
     public ArrayList<Move> getPossibleMoves(Board board) {
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
 
-        // Adds King and queen castle if legal
+        // Adds Pieces.King and queen castle if legal
         if(board.getKing(color) != null && board.getKing(color).canCastleKingside(board)) {
             //System.out.println("adding a king castle");
             possibleMoves.add(new KingCastleMove(board.getKing(color), board));
@@ -276,23 +312,23 @@ public class AIwithAlphaBetaPruning extends Player{
                     for (int i = 0; i < 8; i++) {
                         for (int j = 0; j < 8; j++) {
                             if (board.boardPieces.get(a).isLegalMove(board, i, j)) {
-                                //System.out.println("Move is " + board.boardPieces.get(a).row + board.boardPieces.get(a).col + "row " + i + " column " + j);
+                                //System.out.println("Pieces.Move is " + board.boardPieces.get(a).row + board.boardPieces.get(a).col + "row " + i + " column " + j);
                                 //board.printBoard();
 
                                 boolean normalMove = true;
                                 // adding move if it is a pawn promotion
-                                if (board.boardPieces.get(a).getType().equals("Pawn")) {
+                                if (board.boardPieces.get(a).getType().equals("Pieces.Pawn")) {
                                     if (board.boardPieces.get(a).getColor().equals("white")) {
                                         if (board.boardPieces.get(a).getRow() == 1) {
                                             normalMove = false;
                                             //System.out.println("Adding a pawn promotion for white");
-                                            possibleMoves.add(new PawnPromotionMove((Pawn) board.boardPieces.get(a), i, j, board, "Queen"));
+                                            possibleMoves.add(new PawnPromotionMove((Pawn) board.boardPieces.get(a), i, j, board, "Pieces.Queen"));
                                         }
                                     } else if (board.boardPieces.get(a).getColor().equals("black")) {
                                         if (board.boardPieces.get(a).getRow() == 6) {
                                             normalMove = false;
                                             //System.out.println("Adding a pawn promotion for black");
-                                            possibleMoves.add(new PawnPromotionMove((Pawn) board.boardPieces.get(a), i, j, board, "Queen"));
+                                            possibleMoves.add(new PawnPromotionMove((Pawn) board.boardPieces.get(a), i, j, board, "Pieces.Queen"));
                                         }
                                     }
                                 }

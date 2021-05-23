@@ -1,3 +1,5 @@
+package Pieces;
+
 public class PawnPromotionMove extends Move {
 
     Pawn pawn;
@@ -33,16 +35,16 @@ public class PawnPromotionMove extends Move {
                 board.clearSquare(newRow, newCol);
             }
         }
-        if(newPieceType.equals("Queen")) {
+        if(newPieceType.equals("Pieces.Queen")) {
             promotedPiece = new Queen(newRow, newCol, pawn.getColor());
-        } else if(newPieceType.equals("Rook")) {
+        } else if(newPieceType.equals("Pieces.Rook")) {
             promotedPiece = new Rook(newRow, newCol, pawn.getColor());
-        } else if(newPieceType.equals("Bishop")) {
+        } else if(newPieceType.equals("Pieces.Bishop")) {
             promotedPiece = new Bishop(newRow, newCol, pawn.getColor());
-        } else if(newPieceType.equals("Knight")) {
+        } else if(newPieceType.equals("Pieces.Knight")) {
             promotedPiece = new Knight(newRow, newCol, pawn.getColor());
         } else {
-            System.out.println("PieceType is not a Queen Rook Bishop or Knight");
+            System.out.println("PieceType is not a Pieces.Queen Pieces.Rook Pieces.Bishop or Pieces.Knight");
             return false;
         }
         board.clearSquare(oldRow, oldCol);
@@ -72,7 +74,7 @@ public class PawnPromotionMove extends Move {
     }
 
     public String toString() {
-        return ("Pawn promotion "+super.toString());
+        return ("Pieces.Pawn promotion "+super.toString());
     }
 
 

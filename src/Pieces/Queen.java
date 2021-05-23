@@ -1,12 +1,31 @@
+package Pieces;
+
 public class Queen extends Piece{
+
+    private static double[][] squareWeight =
+            {{-2,-1,-1,-.5,-.5,-1,-1,-2},
+                    {-1,0,0,0,0,0,0,-1},
+                    {-1,0,.5,.5,.5,.5,0,-1},
+                    {-.5,0,.5,.5,.5,.5,0,-.5},
+                    {0,0,.5,.5,.5,.5,0,-.5},
+                    {-1,.5,.5,.5,.5,.5,0,-1},
+                    {-1,0,.5,0,0,0,0,-1},
+                    {-2,-1,-1,-.5,-.5,-1,-1,-2}
+            };
 
     public Queen(int row, int col, String color) {
         super(row, col, color);
         pieceValue = 90;
     }
 
-    public int getPieceValue() {
-        return 90;
+    public double getPieceValue() {
+        if(color.equals("white")) {
+            return pieceValue + squareWeight[row][col];
+        } else if(color.equals("black")) {
+            return pieceValue + squareWeight[7-row][7-col];
+        } else {
+            return pieceValue;
+        }
     }
 
 
@@ -139,6 +158,10 @@ public class Queen extends Piece{
 
         return true;
 
+    }
+
+    public String getType() {
+        return "Pieces.Queen";
     }
 
 }

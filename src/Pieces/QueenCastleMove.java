@@ -1,3 +1,5 @@
+package Pieces;
+
 public class QueenCastleMove extends Move{
     King king;
 

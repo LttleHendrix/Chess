@@ -1,3 +1,5 @@
+package Pieces;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -52,8 +54,8 @@ public class AIPlayer {
         return move;
     }
 
-    /**public Move getMove(AIPlayer other) {
-        Move nextMove = new Move();
+    /**public Pieces.Move getMove(Pieces.AIPlayer other) {
+        Pieces.Move nextMove = new Pieces.Move();
 
         //saveState();
         findMaxMove(0, nextMove, other);

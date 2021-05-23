@@ -1,4 +1,4 @@
-import java.util.Comparator;
+package Pieces;
 
 public class Piece {
 
@@ -69,7 +69,7 @@ public class Piece {
         timesMoved = timesMoved - 1;
     }
 
-    public int getPieceValue() {
+    public double getPieceValue() {
         return 0;
     }
 
@@ -82,7 +82,15 @@ public class Piece {
     }
 
 
-
-
+    public boolean isSamePiece(Piece piece) {
+        if(!this.getType().equals(piece.getType())) {
+            return false;
+        } else if(this.row != piece.row) {
+            return false;
+        } else if(this.col != piece.col) {
+            return false;
+        }
+        return true;
+    }
 
 }

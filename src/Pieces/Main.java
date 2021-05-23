@@ -1,3 +1,5 @@
+package Pieces;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -36,8 +38,8 @@ public class Main {
             return;
         }
 
+        System.out.println(""+new Queen(5, 5, "white").toString());
 
-        System.out.println(new King(0, 0, "white").getClass());
         board.addPiece(new Pawn(1, 0, "black"));
         board.addPiece(new Pawn(1, 1, "black"));
         board.addPiece(new Pawn(1, 2, "black"));

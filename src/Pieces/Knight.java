@@ -1,12 +1,33 @@
+package Pieces;
+
 public class Knight extends Piece {
+
+
+    private static double[][] squareWeight =
+            {{-5,-4,-3,-3,-3,-3,-4,5},
+                    {-4,-2,0,0,0,0,-2,-4},
+                    {-3,0,1,1.5,1.5,1,0,-3},
+                    {-3,.5,1.5,2,2,1.5,.5,-3},
+                    {-3,0,1.5,2,2,1.5,0,-3},
+                    {-3,.5,1,1.5,1.5,1,.5,-3},
+                    {-4,-2,0,.5,.5,0,-2,-4},
+                    {-5,-4,-3,-3,-3,-3,-4,-5}
+            };
+
 
     public Knight(int row, int col, String color) {
         super(row, col, color);
         pieceValue = 30;
     }
 
-    public int getPieceValue() {
-        return 30;
+    public double getPieceValue() {
+        if(color.equals("white")) {
+            return pieceValue + squareWeight[row][col];
+        } else if(color.equals("black")) {
+            return pieceValue + squareWeight[7-row][7-col];
+        } else {
+            return pieceValue;
+        }
     }
 
     public String toString() {
@@ -79,7 +100,7 @@ public class Knight extends Piece {
     }
 
     public String getType() {
-        return "Knight";
+        return "Pieces.Knight";
     }
 
 }

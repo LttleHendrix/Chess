@@ -1,4 +1,21 @@
+package Pieces;
+
+import java.lang.reflect.Array;
+
 public class Pawn extends Piece {
+
+    private static double[][] squareWeight =
+            {{0,0,0,0,0,0,0,0},
+                    {5,5,5,5,5,5,5,5},
+                    {1,1,2,3,3,2,1,1},
+                    {.5,.5,1,2.5,2.5,1,.5,.5},
+                    {0,0,0,2,2,0,0,0},
+                    {.5,-.5,-1,0,0,-1,-.5,.5},
+                {.5,1,1,-2,-2,1,1,.5},
+                {0,0,0,0,0,0,0,0}
+            };
+
+
 
 
     public Pawn(int row, int col, String color) {
@@ -6,26 +23,29 @@ public class Pawn extends Piece {
         pieceValue = 10;
     }
 
-    public int getPieceValue() {
+    public double getPieceValue() {
 
-        // makes pawns more valuable the further up you move them
+        /** // makes pawns more valuable the further up you move them
         int forwardsBonus = 0;
         if(color.equals("white")) {
             forwardsBonus = 6-row;
         } else if(color.equals("black")) {
             forwardsBonus = row - 1;
+        } **/
+
+        if(color.equals("white")) {
+            return pieceValue + squareWeight[row][col];
+        } else if(color.equals("black")) {
+            return pieceValue + squareWeight[7-row][7-col];
+        } else {
+            return pieceValue;
         }
 
 
-
-
-
-
-
-
-        return pieceValue + forwardsBonus;
+        //return pieceValue + forwardsBonus;
     }
 
+    @Override
     public String toString() {
         if(color.equals("white")) {
             return "   pawn  |";
@@ -122,7 +142,7 @@ public class Pawn extends Piece {
     }
 
     public String getType() {
-        return "Pawn";
+        return "Pieces.Pawn";
     }
 
     public boolean legalIgnoreCheck(Board board, int row, int col) {

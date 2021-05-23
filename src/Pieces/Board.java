@@ -1,5 +1,6 @@
+package Pieces;
+
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class Board {
 
@@ -9,6 +10,44 @@ public class Board {
 
     public Board() {
 
+    }
+
+    // Builds a board that is a brand new chess game
+    public static Board buildFreshBoard() {
+        Board board = new Board();
+        board.addPiece(new Pawn(1, 0, "black"));
+        board.addPiece(new Pawn(1, 1, "black"));
+        board.addPiece(new Pawn(1, 2, "black"));
+        board.addPiece(new Pawn(1, 3, "black"));
+        board.addPiece(new Pawn(1, 4, "black"));
+        board.addPiece(new Pawn(1, 5, "black"));
+        board.addPiece(new Pawn(1, 6, "black"));
+        board.addPiece(new Pawn(1, 7, "black"));
+        board.addPiece(new King(0, 4, "black"));
+        board.addPiece(new Rook(0, 0, "black"));
+        board.addPiece(new Rook(0, 7, "black"));
+        board.addPiece(new Queen(0, 3, "black"));
+        board.addPiece(new Knight(0, 6, "black"));
+        board.addPiece(new Knight(0, 1, "black"));
+        board.addPiece(new Bishop(0, 2, "black"));
+        board.addPiece(new Bishop(0, 5, "black"));
+        board.addPiece(new Pawn(6, 0, "white"));
+        board.addPiece(new Pawn(6, 1, "white"));
+        board.addPiece(new Pawn(6, 2, "white"));
+        board.addPiece(new Pawn(6, 3, "white"));
+        board.addPiece(new Pawn(6, 4, "white"));
+        board.addPiece(new Pawn(6, 5, "white"));
+        board.addPiece(new Pawn(6, 6, "white"));
+        board.addPiece(new Pawn(6, 7, "white"));
+        board.addPiece(new King(7, 4, "white"));
+        board.addPiece(new Rook(7, 7, "white"));
+        board.addPiece(new Rook(7, 0, "white"));
+        board.addPiece(new Queen(7, 3, "white"));
+        board.addPiece(new Knight(7, 6, "white"));
+        board.addPiece(new Knight(7, 1, "white"));
+        board.addPiece(new Bishop(7, 2, "white"));
+        board.addPiece(new Bishop(7, 5, "white"));
+        return board;
     }
 
     public Board(ArrayList<Piece> boardPieces, ArrayList<Piece> removedPieces) {
@@ -85,6 +124,18 @@ public class Board {
         return false;
     }
 
+    public boolean isSameBoardState(Board other) {
+        if(this.boardPieces.size() != other.boardPieces.size()) {
+            return false;
+        }
+        for(int i=0; i<boardPieces.size(); i++) {
+            if(!this.boardPieces.get(i).isSamePiece(other.boardPieces.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public void clearSquare(int row, int col) {
         if(squareContains(row, col) != null) {
@@ -97,7 +148,7 @@ public class Board {
     public boolean isInCheck(String color) {
 
         for(int i=0; i<boardPieces.size(); i++) {
-            if(boardPieces.get(i).getType() == "King") {
+            if(boardPieces.get(i).getType() == "Pieces.King") {
                 if(boardPieces.get(i).getColor().equals(color)) {
                     Piece king = boardPieces.get(i);
                     for(int j=0; j<boardPieces.size(); j++) {
@@ -115,7 +166,7 @@ public class Board {
 
     public King getKing(String color) {
         for(int i=0; i<boardPieces.size(); i++) {
-            if(boardPieces.get(i).getType().equals("King")) {
+            if(boardPieces.get(i).getType().equals("Pieces.King")) {
                 if(boardPieces.get(i).getColor().equals(color)) {
                     return (King) boardPieces.get(i);
                 }
@@ -126,7 +177,7 @@ public class Board {
 
     public King getOtherKing(String color) {
         for(int i=0; i<boardPieces.size(); i++) {
-            if(boardPieces.get(i).getType().equals("King")) {
+            if(boardPieces.get(i).getType().equals("Pieces.King")) {
                 if(!boardPieces.get(i).getColor().equals(color)) {
                     return (King) boardPieces.get(i);
                 }

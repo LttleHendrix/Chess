@@ -1,6 +1,19 @@
+package Pieces;
+
 public class Rook extends Piece {
 
     boolean hasMoved;
+
+    private static double[][] squareWeight =
+            {{0,0,0,0,0,0,0,0},
+                    {.5,1,1,1,1,1,1,.5},
+                    {-.5,0,0,0,0,0,0,-5},
+                    {-.5,0,0,0,0,0,0,-5},
+                    {-.5,0,0,0,0,0,0,-5},
+                    {-.5,0,0,0,0,0,0,-5},
+                    {-.5,0,0,0,0,0,0,-5},
+                    {0,0,0,.5,.5,0,0,0}
+            };
 
     public Rook(int row, int col, String color) {
         super(row, col, color);
@@ -8,8 +21,14 @@ public class Rook extends Piece {
         hasMoved = false;
     }
 
-    public int getPieceValue() {
-        return 50;
+    public double getPieceValue() {
+        if(color.equals("white")) {
+            return pieceValue + squareWeight[row][col];
+        } else if(color.equals("black")) {
+            return pieceValue + squareWeight[7-row][7-col];
+        } else {
+            return pieceValue;
+        }
     }
 
     public String toString() {
@@ -80,6 +99,10 @@ public class Rook extends Piece {
 
 
         return false;
+    }
+
+    public String getType() {
+        return "Pieces.Rook";
     }
 
 

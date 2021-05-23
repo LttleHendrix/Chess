@@ -1,3 +1,5 @@
+package Pieces;
+
 import java.util.Comparator;
 
 public class MoveComparator implements Comparator<Move> {

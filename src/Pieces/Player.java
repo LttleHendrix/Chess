@@ -1,3 +1,5 @@
+package Pieces;
+
 public abstract class Player {
 
 

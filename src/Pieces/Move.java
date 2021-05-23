@@ -1,3 +1,5 @@
+package Pieces;
+
 public class Move {
 
     Piece thisPiece;
@@ -7,7 +9,7 @@ public class Move {
     int oldCol;
     int newRow;
     int newCol;
-    int minimaxValue;
+    double minimaxValue;
 
     public Move(Piece piece, int newRow, int newCol, Board board) {
         thisPiece = piece;
@@ -19,7 +21,7 @@ public class Move {
         this.board = board;
     }
 
-    //public Move() {
+    //public Pieces.Move() {
 //
     //}
 
@@ -38,7 +40,7 @@ public class Move {
 
     public boolean doMove(Board board) {
         if(thisPiece == null) {
-            System.out.println("Piece is null trying to do "+toString());
+            System.out.println("Pieces.Piece is null trying to do "+toString());
             throw new NullPointerException();
         }
         thisPiece.addTimeMoved();
@@ -82,7 +84,7 @@ public class Move {
         return true;
     }
 
-    public void setMinimaxValue(int value) {
+    public void setMinimaxValue(double value) {
         this.minimaxValue = value;
     }
 

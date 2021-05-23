@@ -1,14 +1,31 @@
+package Pieces;
+
 public class Bishop extends Piece {
 
-
+    private static double[][] squareWeight =
+            {{-2,-1,-1,-1,-1,-1,-1,-2},
+                    {-1,0,0,0,0,0,0,-1},
+                    {-1,0,.5,1,1,.5,0,-1},
+                    {-1,.5,.5,1,1,.5,.5,-1},
+                    {-1,0,1,1,1,1,0,-1},
+                    {-1,1,1,1,1,1,1,-1},
+                    {-1,.5,0,0,0,0,.5,-1},
+                    {-2,-1,-1,-1,-1,-1,-1,-2}
+            };
 
     public Bishop(int row, int col, String color) {
         super(row, col, color);
         pieceValue = 32;
     }
 
-    public int getPieceValue() {
-        return 32;
+    public double getPieceValue() {
+        if(color.equals("white")) {
+            return pieceValue + squareWeight[row][col];
+        } else if(color.equals("black")) {
+            return pieceValue + squareWeight[7-row][7-col];
+        } else {
+            return pieceValue;
+        }
     }
 
     public String toString() {
@@ -132,7 +149,7 @@ public class Bishop extends Piece {
     }
 
     public String getType() {
-        return "Bishop";
+        return "Pieces.Bishop";
     }
 
 }

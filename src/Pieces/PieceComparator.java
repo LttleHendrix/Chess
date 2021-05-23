@@ -1,3 +1,5 @@
+package Pieces;
+
 import java.util.Comparator;
 
 public class PieceComparator implements Comparator<Piece> {

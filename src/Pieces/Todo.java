@@ -1,3 +1,5 @@
+package Pieces;
+
 public class Todo {
 
     /**
@@ -17,7 +19,7 @@ public class Todo {
      *
      *
      *What to care about for bot
-     * - Piece values ---------------------------------------------------
+     * - Pieces.Piece values ---------------------------------------------------
      * - position for most squares it can attack
      *
      *

@@ -1,3 +1,5 @@
+package Pieces;
+
 public class King extends Piece {
 
     public boolean hasCastled;
@@ -8,7 +10,7 @@ public class King extends Piece {
         hasCastled = false;
     }
 
-    public int getPieceValue() {
+    public double getPieceValue() {
         return 1000;
     }
 
@@ -56,16 +58,16 @@ public class King extends Piece {
                                 //System.out.println("7 5 is occupied");
                             }
                         } else {
-                            //System.out.println("Rook has moved ");
+                            //System.out.println("Pieces.Rook has moved ");
                         }
                     } else {
-                        //System.out.println("Rook square is empty");
+                        //System.out.println("Pieces.Rook square is empty");
                     }
                 } else {
-                    //System.out.println("King has moved "+this.timesMoved+" times");
+                    //System.out.println("Pieces.King has moved "+this.timesMoved+" times");
                 }
             } else {
-                //System.out.println("King's square is empty");
+                //System.out.println("Pieces.King's square is empty");
             }
         } else if(color == "black") {
             if(board.squareContains(0, 4) != null) {
@@ -242,7 +244,7 @@ public class King extends Piece {
     }
 
     public String getType() {
-        return "King";
+        return "Pieces.King";
     }
 
     public void setHasCastled(boolean lol) {
