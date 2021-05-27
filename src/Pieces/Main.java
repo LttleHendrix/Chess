@@ -10,16 +10,43 @@ public class Main {
     public static void main(String[] args) throws AWTException {
 
         Scanner scanner = new Scanner(System.in);
-        Player whitePlayer;
-        Player blackPlayer;
-        AIwithAlphaBetaPruning otherComp;
+        Player whitePlayer = new HumanPlayer("none");
+        Player blackPlayer = new HumanPlayer("none");
         Board board = new Board();
         Robot robot = new Robot();
         String color = "lol";
+        String player = "none";
         ArrayList<Move> completedMoves = new ArrayList<Move>();
         Move nextMove;
+        AIwithAlphaBetaPruning otherComp = new AIwithAlphaBetaPruning(board, "lol");
 
+        while(!player.equals("computer") && !player.equals("human")) {
+            System.out.println("Is white going to be played by a human or computer");
+            player = scanner.nextLine();
+        }
 
+        if(player.equals("computer")) {
+            whitePlayer = new AIwithAlphaBetaPruning(board, "white");
+            otherComp = new AIwithAlphaBetaPruning(board, "black");
+        } else if(player.equals("human")) {
+            whitePlayer = new HumanPlayer("white");
+        }
+
+        player = "lol";
+
+        while(!player.equals("computer") && !player.equals("human")) {
+            System.out.println("Is black going to be played by a human or computer");
+            player = scanner.nextLine();
+        }
+
+        if(player.equals("computer")) {
+            blackPlayer = new AIwithAlphaBetaPruning(board, "black");
+            otherComp = new AIwithAlphaBetaPruning(board, "white");
+        } else if(player.equals("human")) {
+            blackPlayer = new HumanPlayer("black");
+        }
+
+/**
         while(!color.equals("white") && !color.equals("black")) {
             System.out.println("Is the computer going to be white or black");
             color = scanner.nextLine();
@@ -37,8 +64,7 @@ public class Main {
             System.out.println("Big bad problem");
             return;
         }
-
-        System.out.println(""+new Queen(5, 5, "white").toString());
+ **/
 
         board.addPiece(new Pawn(1, 0, "black"));
         board.addPiece(new Pawn(1, 1, "black"));

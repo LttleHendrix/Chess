@@ -38,10 +38,12 @@ public class HumanPlayer extends Player{
                     } else if(board.squareContains(oldRow, oldCol).getType().equals("Pieces.Pawn")) {
                         if(color.equals("white")) {
                             if(oldRow == 1) {
+                                System.out.println("pawn promotion for white");
                                 return new PawnPromotionMove((Pawn)board.squareContains(oldRow, oldCol), newRow, newCol, board, "Pieces.Queen");
                             }
                         } else if(color.equals("black")) {
                             if(oldRow == 6) {
+                                System.out.println("pawn promotion for black");
                                 return new PawnPromotionMove((Pawn)board.squareContains(oldRow, oldCol), newRow, newCol, board, "Pieces.Queen");
                             }
                         }

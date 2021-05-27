@@ -25,13 +25,13 @@ public class Pawn extends Piece {
 
     public double getPieceValue() {
 
-        /** // makes pawns more valuable the further up you move them
+         // makes pawns more valuable the further up you move them
         int forwardsBonus = 0;
         if(color.equals("white")) {
             forwardsBonus = 6-row;
         } else if(color.equals("black")) {
             forwardsBonus = row - 1;
-        } **/
+        }
 
         if(color.equals("white")) {
             return pieceValue + squareWeight[row][col];

@@ -167,28 +167,34 @@ public class King extends Piece {
         }
 
         if(row > 7 || row < 0) {
+            System.out.println("Row is out of bounds");
             return false;
         }
         if(col > 7 || col < 0) {
+            System.out.println("column is out of bounds");
             return false;
         }
         if(this.row == row && this.col == col) {
+            System.out.println("Moving to same square");
             return false;
         }
 
 
         if(Math.abs(row - this.row) > 1 || Math.abs(col - this.col) > 1) {
+            System.out.println("Moving to square more than 1 away");
             return false;
         }
 
         if(color.equals("black")) {
             if(board.squareContains(row, col) == null) {
                 if(badCheckMove(board, row, col)) {
+                    System.out.println("Bad check move into empty square for black");
                     return false;
                 }
                 return true;
             } else if(board.squareContains(row, col).getColor().equals("white")) {
                 if(badCheckMove(board, row, col)) {
+                    System.out.println("bad check move into white occupied square for black");
                     return false;
                 }
                 return true;
@@ -198,11 +204,13 @@ public class King extends Piece {
         if(color.equals("white")) {
             if(board.squareContains(row, col) == null) {
                 if(badCheckMove(board, row, col)) {
+                    System.out.println("bad check move into empty square for white");
                     return false;
                 }
                 return true;
             } else if(board.squareContains(row, col).getColor().equals("black")) {
                 if(badCheckMove(board, row, col)) {
+                    System.out.println("bad check move into black occupied square for white");
                     return false;
                 }
                 return true;
